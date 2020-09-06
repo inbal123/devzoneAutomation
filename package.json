@@ -1,0 +1,23 @@
+{
+  "name": "devzone",
+  "version": "1.0.0",
+  "description": "automation testing for devzone",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "keywords": [
+    "devzone",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^4.11.0"
+  },
+  "devDependencies": {
+    "cypress-file-upload": "^4.1.1",
+    "cypress-xpath": "^1.6.0"
+  }
+}
