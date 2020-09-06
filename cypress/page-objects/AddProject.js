@@ -45,7 +45,7 @@ export default class AddProject extends BasePage {
     }
 
     static goBackToPreviousStage() {
-        cy.contains(/^לשלב הקודם$/)
+        cy.contains(/^לשלב הקודם$/).click()
     }
 
     static clickOnFinishButton() {
