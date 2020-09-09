@@ -4,6 +4,8 @@ import ManageSubscription from "../page-objects/ManageSubscription";
 import AddProject from "../page-objects/AddProject";
 import DeleteProject from "../page-objects/DeleteProject";
 import AddService from "../page-objects/AddService";
+import DeleteService from "../page-objects/DeleteService";
+
 
 describe("Visit Website", () => {
   it("Visit", () => {
@@ -77,37 +79,69 @@ describe("Add Project Test", () => {
 
 describe("Add Service Test", () => {
   describe("Add an existed service", () => {
-    it("ClickAddServiceInHomePage", () => {
+    it(
+      "Click 'Add Service' in homepage\n" +
+      "Choose 'Testing' project",
+      () => {
       AddService.clickOnAddServiceButton();
       AddService.typeToSelectTheProject();
       AddService.clickAddService();
     });
 
-    it("First tab - Fill general details", () => {
+    it(
+      `First tab - Fill general details\n
+      Service name - ${AddService.SERVICE_NAME}\n
+      Tags - Click on all tags\n
+      Description - ${AddService.SERVICE_DESCRIPTION}`
+      ,
+    () => {
       AddService.typeServiceName();
       AddService.ClickOnTheWantedTags();
       AddService.typeServiceDescription();
       AddService.clickOnNextStageButton();
     });
 
-    it("Second tab - Fill technical information", () => {
-      AddService.ChooseExistService();
+    it(
+      `Second tab - Fill technical information\n
+      Service Status - Existing service\n
+      Service Type - B2B`,
+       () => {
+      AddService.ChooseExistingService();
       AddService.ChooseB2BServiceType();
       AddService.clickOnNextStageButton();
     });
 
-    it("Third tab - Fill contacting details", () => {
+    it(
+      `Third tab - Fill contacting details\n
+      Link to Operation channel - ${AddService.LINK_TO_THE_OPERATION_CHANNEL}\n
+      Development team phone numbers - \n 
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
+      Operating CHAMAL phone numbers - \n 
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
+      Product Manager details - \n 
+      Rule - ${AddService.RULE_OF_PRODUCT_MANAGER}\n
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Select from drop list - should be done here but we could'nt do that at the moment`,
+      () => {
       AddService.fillAllTheServiceTeamDetails();
       AddService.clickOnNextStageButton();
     });
 
-    it("Fourth tab - Upload files", () => {
-      AddService.uplaodFileToTheService();
-      //AddService.uplaodFileToTheService2()
+    it(
+      `Fourth tab - Upload files\n
+      File - ${AddService.NAME_OF_UPLOADED_FILE}`,
+      () => {
+      AddService.uplaodFilesToTheService();
       AddService.clickOnNextStageButton();
     });
 
-    it("Fifth tab - elect API", () => {
+    it(
+      `Fifth Tab - Select API\n
+      API Type - GraphQL\n
+      API Server Endpoint Link - ${AddService.GRAPHQL_SERVER_ENDPOINT_LINK}`,
+      () => {
       AddService.selectGraphQLAsApiType();
       AddService.typeGraphQLServerEndpointLink();
     });
@@ -118,7 +152,23 @@ describe("Add Service Test", () => {
     });
   });
 
-  describe("Add new service", () => {});
+
+  describe("Delete service", () => {
+    it('Delete service', () => {
+      // BasePage.goToHomePage()
+      // DeleteService.openServicesPage()
+      // cy.pause()
+      // DeleteService.clickOnTheChosenService(AddService.SERVICE_NAME
+      //cy.pause()
+      DeleteService.ClickDeleteService()
+      DeleteService.confirmDeletion()
+
+    })
+  });
+
+  describe("Add future service", () => {
+
+  });
 
   // describe("Delete Project Test", () => {
   //     it("Delete Project - Testing", () => {
