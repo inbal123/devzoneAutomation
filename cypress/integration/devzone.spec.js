@@ -78,7 +78,7 @@ describe("Add Project Test", () => {
 });
 
 describe("Add Service Test", () => {
-  describe("Add an existed service", () => {
+  describe("Add existing service", () => {
     it(
       "Click 'Add Service' in homepage\n" +
       "Choose 'Testing' project",
@@ -104,10 +104,12 @@ describe("Add Service Test", () => {
     it(
       `Second tab - Fill technical information\n
       Service Status - Existing service\n
-      Service Type - B2B`,
+      Service Type - B2B\n
+      Number of requests per minute - ${AddService.NUMBER_OF_REQUESTS_PER_MINUTE}`,
        () => {
       AddService.ChooseExistingService();
       AddService.ChooseB2BServiceType();
+      AddService.typeNumberOfRequestPerSecond()
       AddService.clickOnNextStageButton();
     });
 
@@ -128,10 +130,11 @@ describe("Add Service Test", () => {
       AddService.fillAllTheServiceTeamDetails();
       AddService.clickOnNextStageButton();
     });
-
+//AddService.FILE_NAMES.forEach(e => console.log('File -  ' + e + '\n'))
     it(
-      `Fourth tab - Upload files\n
-      File - ${AddService.NAME_OF_UPLOADED_FILE}`,
+      `Fourth tab - Upload files -
+      ${AddService.printFiles()} 
+      `,
       () => {
       AddService.uplaodFilesToTheService();
       AddService.clickOnNextStageButton();
@@ -152,33 +155,88 @@ describe("Add Service Test", () => {
     });
   });
 
-
-  describe("Delete service", () => {
-    it('Delete service', () => {
-      // BasePage.goToHomePage()
-      // DeleteService.openServicesPage()
-      // cy.pause()
-      // DeleteService.clickOnTheChosenService(AddService.SERVICE_NAME
-      //cy.pause()
+  describe("Delete existing service", () => {
+    it('Delete existing service', () => {
       DeleteService.ClickDeleteService()
       DeleteService.confirmDeletion()
-
     })
   });
 
   describe("Add future service", () => {
+     it(
+      "Click 'Add Service' in homepage\n" +
+      "Choose 'New' project",
+      () => {
+      AddService.clickOnAddServiceButton();
+      AddService.typeToSelectTheProject();
+      AddService.clickAddService();
+    });
 
+    it(
+      `First tab - Fill general details\n
+      Service name - ${AddService.SERVICE_NAME}\n
+      Tags - Click on all tags\n
+      Description - ${AddService.SERVICE_DESCRIPTION}`
+      ,
+    () => {
+      AddService.typeServiceName();
+      AddService.ClickOnTheWantedTags();
+      AddService.typeServiceDescription();
+      AddService.clickOnNextStageButton();
+    });
+    it(
+      `Second tab - Fill technical information\n
+      Service Status - Future service\n
+      Service Type - B2C\n
+      Number of requests per minute - ${AddService.NUMBER_OF_REQUESTS_PER_MINUTE}`,
+       () => {
+      AddService.ChooseFutureService();
+      AddService.ChooseB2CServiceType();
+      AddService.typeNumberOfRequestPerSecond()
+      AddService.clickOnNextStageButton();
+    });
+    it(
+      `Third tab - Fill contacting details\n
+      Link to Operation channel - ${AddService.LINK_TO_THE_OPERATION_CHANNEL}\n
+      Development team phone numbers - \n 
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
+      Operating CHAMAL phone numbers - \n 
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
+      Product Manager details - \n 
+      Rule - ${AddService.RULE_OF_PRODUCT_MANAGER}\n
+      Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
+      Select from drop list - should be done here but we could'nt do that at the moment`,
+      () => {
+      AddService.fillAllTheServiceTeamDetails();
+      AddService.clickOnNextStageButton();
+    });
+    it(
+      `Fourth tab - Upload files -
+      ${AddService.printFiles()} 
+      `,
+      () => {
+      AddService.uplaodFilesToTheService();
+      AddService.clickOnNextStageButton();
+    });
+    it(
+      `Fifth Tab - Select API\n
+      API Type - Swagger\n
+      API Server Endpoint Link - ${AddService.SWAGGER_SERVER_ENDPOINT_LINK}`,
+      () => {
+      AddService.selectSwaggerAsApiType();
+      AddService.typeSwaggerServerEndpointLink()
+    });
+    it("Finish adding the future service", () => {
+      AddService.clickOnFinishButton();
+      AddService.viewCreatedService();
+    });
+    describe("Delete future service", () => {
+      it('Delete future service', () => {
+        DeleteService.ClickDeleteService()
+        DeleteService.confirmDeletion()
+      })
+    });
   });
-
-  // describe("Delete Project Test", () => {
-  //     it("Delete Project - Testing", () => {
-  //         BasePage.goToHomePage()
-  //         BasePage.goToPersonalArea()
-  //         DeleteProject.chooseProjectToDelete("Testing")
-  //         DeleteProject.openProjectPage()
-  //         DeleteProject.clickOnDeleteProjectButton()
-  //         DeleteProject.typeProjectNameForConfirmation()
-  //         DeleteProject.deleteProject()
-  //     })
-  // })
 });

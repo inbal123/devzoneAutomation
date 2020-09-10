@@ -1,15 +1,40 @@
 import BasePage from "./BasePage";
 
 export default class AddService extends BasePage {
+  static FILE_NAMES = [
+    "mydoc.doc",
+    "mydocx.docx",
+    "mypdf.pdf",
+    "mypptx.pptx",
+    "myxlsx.xlsx",
+  ];
+  
+  static FILE_FORMATS = [
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  ];
   static SERVICE_NAME = "shit";
   static SERVICE_DESCRIPTION = "my description";
-  static NUMBER_OF_REQUESTS = "10250";
+  static NUMBER_OF_REQUESTS_PER_MINUTE = "10250";
   static LINK_TO_THE_OPERATION_CHANNEL = "example.com";
   static EXAMPLE_ARMY_PHONE_NUMBER = "55555555";
   static EXAMPLE_CIVILIAN_PHONE_NUMBER = "555555555";
   static RULE_OF_PRODUCT_MANAGER = "klumnik";
   static GRAPHQL_SERVER_ENDPOINT_LINK = "http://graphql-server-endpoint-link";
   static SWAGGER_SERVER_ENDPOINT_LINK = "http://swagger-server-endpoint-link";
+  
+
+  static printFiles(){
+   let outputString = ""
+    for (let i = 0; i < AddService.FILE_NAMES.length; i++) {
+      outputString += '\n' + (AddService.FILE_NAMES[i].substring(AddService.FILE_NAMES[i].indexOf('.')+1))
+      + " file type - " + AddService.FILE_NAMES[i] + ((i === AddService.FILE_NAMES.length -1) ? '\n' : "\n\n")
+    }
+    return outputString
+  }
   static clickOnAddServiceButton() {
     cy.xpath("//span[text()='הוספת שירות']").click();
   }
@@ -29,6 +54,7 @@ export default class AddService extends BasePage {
       tag.click();
     });
   }
+
   static typeServiceDescription() {
     cy.get("textarea.create-project-service-general__description-box").type(
       this.SERVICE_DESCRIPTION
@@ -54,7 +80,7 @@ export default class AddService extends BasePage {
     cy.xpath("//div[@class='radio-button__radio-text'][text()='B2C']").click();
   }
   static typeNumberOfRequestPerSecond() {
-    cy.get("input[placeholder='2000']").type(this.NUMBER_OF_REQUESTS);
+    cy.get("input[placeholder='2000']").type(this.NUMBER_OF_REQUESTS_PER_MINUTE);
   }
   static fillAllTheServiceTeamDetails() {
     this.typeLinkToTheOperationChannel();
@@ -93,51 +119,26 @@ export default class AddService extends BasePage {
     ).type(this.EXAMPLE_ARMY_PHONE_NUMBER);
     // Here we should choose value in the select list, but it's impossible at the moment
   }
+  static typeNumberOfRequestPerSecond(){
+    cy.get('input[placeholder="2000"]').type(AddService.NUMBER_OF_REQUESTS_PER_MINUTE)
+  }
 
   static uplaodFilesToTheService() {
-    const FILE_NAMES = [
-      "mydoc.doc",
-      "mydocx.docx",
-      "mypdf.pdf",
-      "mypptx.pptx",
-      "myxlsx.xlsx",
-    ];
-    const FILE_FORMATS = [
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "application/pdf",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ];
+     
 
-    for (let i = 0; i < FILE_FORMATS.length; i++) {
-        cy.fixture(FILE_NAMES[i]).then((fileContent) => {
+    for (let i = 0; i < AddService.FILE_FORMATS.length; i++) {
+        cy.fixture(AddService.FILE_NAMES[i]).then((fileContent) => {
             cy.get("input").attachFile(
               {
                 fileContent: fileContent.toString(),
-                fileName: FILE_NAMES[i],
-                mimeType: FILE_FORMATS[i],
+                fileName: AddService.FILE_NAMES[i],
+                mimeType: AddService.FILE_FORMATS[i],
                 encoding: "utf-8",
               },
               { subjectType: "input" }
             );
           });
     }
-  }
-
-  static uplaodFileToTheService2() {
-    cy.fixture("mydocx.docx").then((fileContent) => {
-      cy.get("input").attachFile(
-        {
-          fileContent: fileContent.toString(),
-          fileName: "mydocx.docx",
-          mimeType:
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          encoding: "utf-8",
-        },
-        { subjectType: "input" }
-      );
-    });
   }
 
   static selectGraphQLAsApiType() {

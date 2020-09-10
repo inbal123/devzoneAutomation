@@ -12,7 +12,7 @@ export default class AddProject extends BasePage {
     static chooseProjectForces(projectForces) {
         cy.get("#create-project-general__arm").click().then(() => {
 
-        cy.wait(1000)
+        cy.wait(500)
         cy.get("li.MuiListItem-root").contains(new RegExp("^" + projectForces + "$", "g")).click()})
     }
 
