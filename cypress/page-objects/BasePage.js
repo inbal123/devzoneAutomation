@@ -4,7 +4,7 @@ export default class BasePage {
     }
 
     static reloadPage() {
-        cy.reload
+        cy.reload()
     }
 
     static goToHomePage() {
