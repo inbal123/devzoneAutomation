@@ -55,7 +55,7 @@ export default class AddService extends BasePage {
     cy.get("#input-with-icon-adornment").type(AddService.SERVICE_NAME)
   }
   static ClickOnTheWantedTags() {
-    cy.get(".search-filters-item").then((tag) => {
+    cy.get(".search-filters-item").each((tag) => {
       tag.click()
     })
   }
