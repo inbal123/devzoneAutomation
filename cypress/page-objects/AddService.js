@@ -8,7 +8,6 @@ export default class AddService extends BasePage {
     "mypptx.pptx",
     "myxlsx.xlsx",
   ]
-
   static FILE_FORMATS = [
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -16,7 +15,8 @@ export default class AddService extends BasePage {
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   ]
-  static SERVICE_NAME = "shit"
+  static EXISTING_SERVICE_NAME = "existing service"
+  static FUTURE_SERVICE_NAME = "future service"
   static SERVICE_DESCRIPTION = "my description"
   static NUMBER_OF_REQUESTS_PER_MINUTE = "10250"
   static LINK_TO_THE_OPERATION_CHANNEL = "example.com"
@@ -40,8 +40,11 @@ export default class AddService extends BasePage {
     }
     return outputString
   }
+
   static clickOnAddServiceButton() {
-    cy.xpath("//span[text()='הוספת שירות']").click()
+    cy.get(
+      "#header-container > div.left-header-container > div.add-service-btn > div > span:nth-child(1)"
+    ).click()
   }
 
   static typeToSelectTheProject() {
@@ -51,9 +54,11 @@ export default class AddService extends BasePage {
   static clickAddService() {
     cy.contains("להוספת שירות").click()
   }
-  static typeServiceName() {
-    cy.get("#input-with-icon-adornment").type(AddService.SERVICE_NAME)
+
+  static typeServiceName(name) {
+    cy.get("#input-with-icon-adornment").type(name)
   }
+
   static ClickOnTheWantedTags() {
     cy.get(".search-filters-item").each((tag) => {
       tag.click()
@@ -65,6 +70,7 @@ export default class AddService extends BasePage {
       AddService.SERVICE_DESCRIPTION
     )
   }
+
   static ChooseExistingService() {
     cy.xpath(
       "//div[@class='radio-button__radio-text'][text()='שירות קיים']"
@@ -84,31 +90,34 @@ export default class AddService extends BasePage {
   static ChooseB2CServiceType() {
     cy.xpath("//div[@class='radio-button__radio-text'][text()='B2C']").click()
   }
+
   static typeNumberOfRequestPerSecond() {
     cy.get("input[placeholder='2000']").type(
       AddService.NUMBER_OF_REQUESTS_PER_MINUTE
     )
   }
+
   static fillAllTheServiceTeamDetails() {
     AddService.typeLinkToTheOperationChannel()
     AddService.typeDevelopmentTeamPhoneNumbers()
     AddService.typeOperatingCHAMALPhoneNumbers()
-    // Tryings to solve the problem
     AddService.selectUser()
-
-    this.TypeProductManagerDetails()
+    AddService.TypeProductManagerDetails()
   }
+
   static selectUser() {
     cy.get(
       'div[class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"]'
     ).click()
     cy.get('li[data-value="name"]').click()
   }
+
   static typeLinkToTheOperationChannel() {
     cy.get("#input-with-icon-adornment").type(
       AddService.LINK_TO_THE_OPERATION_CHANNEL
     )
   }
+
   static typeDevelopmentTeamPhoneNumbers() {
     cy.xpath(
       '//*[@id="root"]/div/div/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/div/div/div/input'
@@ -117,6 +126,7 @@ export default class AddService extends BasePage {
       '//*[@id="root"]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div/div/input'
     ).type(AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER)
   }
+
   static typeOperatingCHAMALPhoneNumbers() {
     cy.xpath(
       '//*[@id="root"]/div/div/div/div[2]/div/div[3]/div[2]/div[1]/div[2]/div/div/div/input'
@@ -133,8 +143,8 @@ export default class AddService extends BasePage {
     cy.xpath(
       '//*[@id="root"]/div/div/div/div[2]/div/div[4]/div[2]/div[2]/div[2]/div/div/div/input'
     ).type(AddService.EXAMPLE_ARMY_PHONE_NUMBER)
-    // Here we should choose value in the select list, but it's impossible at the moment
   }
+
   static typeNumberOfRequestPerSecond() {
     cy.get('input[placeholder="2000"]').type(
       AddService.NUMBER_OF_REQUESTS_PER_MINUTE
@@ -164,16 +174,19 @@ export default class AddService extends BasePage {
   static selectSwaggerAsApiType() {
     cy.xpath("//div[text()='Swagger']").click()
   }
+
   static typeGraphQLServerEndpointLink() {
     cy.get('input[class="MuiInputBase-input MuiOutlinedInput-input"]').type(
       AddService.GRAPHQL_SERVER_ENDPOINT_LINK
     )
   }
+
   static typeSwaggerServerEndpointLink() {
     cy.get('input[class="MuiInputBase-input MuiOutlinedInput-input"]').type(
       AddService.SWAGGER_SERVER_ENDPOINT_LINK
     )
   }
+
   static clickOnNextStageButton() {
     cy.contains(/^לשלב הבא$/).click()
   }
