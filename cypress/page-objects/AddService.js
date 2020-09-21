@@ -47,12 +47,14 @@ export default class AddService extends BasePage {
     ).click()
   }
 
-  static typeToSelectTheProject() {
+  static clickToSelectTheProject() {
     cy.xpath("//div[text()='Testing']").click()
   }
 
   static clickAddService() {
-    cy.contains("להוספת שירות").click()
+    cy.get(
+      'button[class="create-project-service-choose-project__button"]'
+    ).click()
   }
 
   static typeServiceName(name) {
@@ -191,8 +193,8 @@ export default class AddService extends BasePage {
     cy.contains(/^לשלב הבא$/).click()
   }
 
-  static goBackToPreviousStage() {
-    cy.contains(/^לשלב הקודם$/)
+  static clickOnPreviousStageButton() {
+    cy.contains(/^לשלב הקודם$/).click()
   }
 
   static clickOnFinishButton() {
@@ -201,5 +203,22 @@ export default class AddService extends BasePage {
 
   static viewCreatedService() {
     cy.contains(/^מעבר לצפייה בשירות$/).click()
+  }
+
+  static makeSureAddServiceButtonIsDisabled() {
+    cy.get(
+      'button[class="create-project-service-choose-project__button"]'
+    ).should("be.disabled")
+  }
+
+  static makeSureNextStageButtonIsDisabled() {
+    cy.get(
+      "#root > div > div > div > div.nav-buttons > button.nav-buttons__button.nav-buttons__button--next"
+    ).should("have.class", "disabledElement")
+  }
+  static makeSureNextStageButtonIsEnabled() {
+    cy.get(
+      "#root > div > div > div > div.nav-buttons > button.nav-buttons__button.nav-buttons__button--next"
+    ).should("not.have.class", "disabledElement")
   }
 }

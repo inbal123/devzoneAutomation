@@ -36,4 +36,33 @@ export default class EditService {
   static clickOnAllServicesButton() {
     cy.xpath('//span[@class="footer-right-txt"][text()="כל השירותים"]').click()
   }
+
+  static clickEditServicePicture() {
+    cy.fixture("test.jpg").then((fileContent) => {
+      cy.get('input[class="input-file-service-page"]').attachFile(
+        {
+          fileContent: fileContent.toString(),
+          fileName: "test.jpg",
+          mimeType: "image/jpg",
+          encoding: "utf-8",
+        },
+        { subjectType: "input" }
+      )
+    })
+  }
+
+  static clickCancelButton() {
+    cy.get(".nav-header__cancel-btn").click()
+  }
+
+  static cancelTheTryingToCaneclTheAddServiceProcedure() {
+    cy.get(
+      ".close-wizard-modal__button.close-wizard-modal__button--back"
+    ).click()
+  }
+  static clickToConfirmTheCancel() {
+    cy.get(
+      ".close-wizard-modal__button.close-wizard-modal__button--exit"
+    ).click()
+  }
 }
