@@ -21,9 +21,7 @@ export default class AddProject extends BasePage {
   }
 
   static typeProjectDescription(projectDescription) {
-    cy.get(
-      "textarea[placeholder ='כדאי לשקף בתיאור את מטרת הפרויקט ועולם התוכן שלו']"
-    ).type(projectDescription)
+    cy.get("textarea[placeholder ='כדאי לשקף בתיאור את מטרת הפרויקט ועולם התוכן שלו']").type(projectDescription)
   }
 
   static clickOnAddMembersButton() {
@@ -31,7 +29,7 @@ export default class AddProject extends BasePage {
   }
 
   static typePersonalNumber(personalNumber) {
-    cy.get("input[placeholder = 's1111111']").type(personalNumber)
+    cy.get("input.member-item-add-on-input").type(personalNumber)
   }
 
   static addMember() {
