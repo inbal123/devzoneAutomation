@@ -216,9 +216,28 @@ export default class AddService extends BasePage {
       "#root > div > div > div > div.nav-buttons > button.nav-buttons__button.nav-buttons__button--next"
     ).should("have.class", "disabledElement")
   }
+
   static makeSureNextStageButtonIsEnabled() {
     cy.get(
       "#root > div > div > div > div.nav-buttons > button.nav-buttons__button.nav-buttons__button--next"
     ).should("not.have.class", "disabledElement")
+  }
+
+  static ElementFromFirstTabShouldBeVisible() {
+    cy.xpath("//div[text()='שם השירות']").should("be.visible")
+  }
+
+  static ElementFromSecondTabShouldBeVisible() {
+    cy.xpath("//div[text()='בדיקת עומסים']").should("be.visible")
+  }
+
+  static ElementFromThirdTabShouldBeVisible() {
+    cy.xpath("//div[text()='טלפוני צוות פיתוח']").should("be.visible")
+  }
+
+  static ElementFromFourthTabShouldBeVisible() {
+    cy.xpath("//span[text()='אפשר לבחור קובץ או לגרור אותו לכאן']").should(
+      "be.visible"
+    )
   }
 }

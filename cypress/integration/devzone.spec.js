@@ -6,70 +6,67 @@ import AddService from "../page-objects/AddService"
 import DeleteService from "../page-objects/DeleteService"
 import EditService from "../page-objects/EditService"
 
-describe("Visit Website", () => {
-  it("Visit", () => {
+describe(`Visit Website`, () => {
+  it(`Visit`, () => {
     cy.visit("http://localhost:3000/")
     // cy.visit("http://devzone-webiks.s3-website.eu-central-1.amazonaws.com")
   })
 })
-describe("View Alerts Test", () => {
-  it("View Alerts", () => {
+describe(`View Alerts Test`, () => {
+  it(`View Alerts`, () => {
     ViewAlerts.clickOnAlertsButton()
     ViewAlerts.verifyAlertsAreShown()
   })
-  it("Close Alerts Window", () => {
+  it(`Close Alerts Window`, () => {
     ViewAlerts.closeAlertsWindow()
   })
 })
-describe("Manage Subscription Test", () => {
-  it("Open Service - חיפוש", () => {
+describe(`Manage Subscription Test`, () => {
+  it(`Open Service - חיפוש`, () => {
     ManageSubscription.openServicePage("חיפוש")
   })
-  it("Unsubscribe from Service", () => {
+  it(`Unsubscribe from Service`, () => {
     ManageSubscription.unsubscriptionFromService()
     ManageSubscription.verifyUnsubscription()
   })
-  it("Subscribe to Service", () => {
+  it(`Subscribe to Service`, () => {
     ManageSubscription.subscribeToService()
     ManageSubscription.verifySubscription()
   })
 })
-describe("Add Project Test", () => {
-  it("Go to Add Project Page", () => {
+describe(`Add Project Test`, () => {
+  it(`Go to Add Project Page`, () => {
     BasePage.goToHomePage()
     BasePage.goToPersonalArea()
     AddProject.clickOnAddProjectButton()
   })
-  it(
-    "Insert Project Details\n" +
-      "Name - Testing\n" +
-      "Forces - תקשוב\n" +
-      "Description - Description",
-    () => {
-      AddProject.typeProjectName("Testing")
-      AddProject.chooseProjectForces("תקשוב")
-      AddProject.typeProjectDescription("Description")
-      AddProject.clickOnNextStageButton()
-    }
-  )
-  it("Add Project Member - s1111111", () => {
+  it(`Insert Project Details\n
+      Name - Testing\n
+      Forces - תקשוב\n
+      Description - Description`, () => {
+    AddProject.typeProjectName("Testing")
+    AddProject.chooseProjectForces("תקשוב")
+    AddProject.typeProjectDescription("Description")
+    AddProject.clickOnNextStageButton()
+  })
+  it(`Add Project Member - s1111111`, () => {
     AddProject.clickOnAddMembersButton()
     AddProject.typePersonalNumber("s1111111")
     AddProject.addMember()
     AddProject.clickOnNextStageButton()
   })
-  it("Add Project Logo - test.jpg", () => {
+  it(`Add Project Logo - test.jpg`, () => {
     AddProject.insertProjectLogo()
     AddProject.clickOnFinishButton()
   })
 
-  it("View Created Project", () => {
+  it(`View Created Project`, () => {
     AddProject.viewCreatedProject()
   })
 })
-describe("Add Service Test", () => {
-  describe("Add existing service", () => {
-    it("Click 'Add Service' in homepage\n" + "Choose 'Testing' project", () => {
+describe(`Add Service Test`, () => {
+  describe(`Add existing service`, () => {
+    it(`Click 'Add Service' in homepage\n Choose 'Testing' project`, () => {
       AddService.clickOnAddServiceButton()
       AddService.clickToSelectTheProject()
       AddService.clickAddService()
@@ -94,22 +91,20 @@ describe("Add Service Test", () => {
     })
     it(`Third tab - Fill contacting details\n
       Link to Operation channel - ${AddService.LINK_TO_THE_OPERATION_CHANNEL}\n
-      Development team phone numbers - \n
+      Development team phone numbers -\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
-      Operating CHAMAL phone numbers - \n
+      Operating CHAMAL phone numbers -\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
-      Product Manager details - \n
+      Product Manager details -\n
       Rule - ${AddService.RULE_OF_PRODUCT_MANAGER}\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Select from drop list - NAME`, () => {
       AddService.fillAllTheServiceTeamDetails()
       AddService.clickOnNextStageButton()
     })
-    it(`Fourth tab - Upload files -
-      ${AddService.printFiles()}
-      `, () => {
+    it(`Fourth tab - Upload files - ${AddService.printFiles()}`, () => {
       AddService.uplaodFilesToTheService()
       AddService.clickOnNextStageButton()
     })
@@ -119,15 +114,15 @@ describe("Add Service Test", () => {
       AddService.selectGraphQLAsApiType()
       AddService.typeGraphQLServerEndpointLink()
     })
-    it("Finish adding the existed service", () => {
+    it(`Finish adding the existed service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
       DeleteService.ClickDeleteService()
       DeleteService.confirmDeletion(AddService.EXISTING_SERVICE_NAME)
     })
   })
-  describe("Add future service", () => {
-    it("Click 'Add Service' in homepage\n" + "Choose 'New' project", () => {
+  describe(`Add future service`, () => {
+    it(`Click 'Add Service' in homepage\n Choose 'New' project`, () => {
       AddService.clickOnAddServiceButton()
       AddService.clickToSelectTheProject()
       AddService.clickAddService()
@@ -152,22 +147,20 @@ describe("Add Service Test", () => {
     })
     it(`Third tab - Fill contacting details\n
       Link to Operation channel - ${AddService.LINK_TO_THE_OPERATION_CHANNEL}\n
-      Development team phone numbers - \n
+      Development team phone numbers -\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
-      Operating CHAMAL phone numbers - \n
+      Operating CHAMAL phone numbers -\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Civilian phone - ${AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER}\n
-      Product Manager details - \n
+      Product Manager details -\n
       Rule - ${AddService.RULE_OF_PRODUCT_MANAGER}\n
       Army phone - ${AddService.EXAMPLE_ARMY_PHONE_NUMBER}\n
       Select from drop list - NANE`, () => {
       AddService.fillAllTheServiceTeamDetails()
       AddService.clickOnNextStageButton()
     })
-    it(`Fourth tab - Upload files -
-      ${AddService.printFiles()}
-      `, () => {
+    it(`Fourth tab - Upload files - ${AddService.printFiles()}`, () => {
       AddService.uplaodFilesToTheService()
       AddService.clickOnNextStageButton()
     })
@@ -177,12 +170,12 @@ describe("Add Service Test", () => {
       AddService.selectSwaggerAsApiType()
       AddService.typeSwaggerServerEndpointLink()
     })
-    it("Finish adding the future service", () => {
+    it(`Finish adding the future service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
     })
-    describe("Edit service", () => {
-      it("reomve two tags", () => {
+    describe(`Edit service`, () => {
+      it(`reomve two tags`, () => {
         EditService.openEditWindow()
         EditService.editName()
         EditService.editNumberOfRequestsPerMinute()
@@ -190,13 +183,11 @@ describe("Add Service Test", () => {
         EditService.clickSave()
       })
     })
-
-    describe("Edit service picture", () => {
-      it("Edit service picture", () => {
+    describe(`Edit service picture`, () => {
+      it(`Edit service picture`, () => {
         EditService.clickEditServicePicture()
       })
     })
-
     describe("Delete future service", () => {
       it("Delete future service", () => {
         DeleteService.ClickDeleteService()
@@ -205,78 +196,96 @@ describe("Add Service Test", () => {
     })
   })
 })
-
-describe("Cancel Add Service", () => {
-  it("Click 'Add Service' in homepage\n" + "Choose 'Testing' project", () => {
-    AddService.clickOnAddServiceButton()
-    AddService.clickToSelectTheProject()
-    AddService.clickAddService()
-  })
-  it(`First tab - Fill general details\n
-      Service name - ${AddService.EXISTING_SERVICE_NAME}`, () => {
-    AddService.typeServiceName(AddService.EXISTING_SERVICE_NAME)
-  })
-  it(`Cancel add service \n procedure
-   (without saving the already filled-in details) and then \n
-   regret and choose to continue with add service procedure`, () => {
-    EditService.clickCancelButton()
-    EditService.cancelTheTryingToCaneclTheAddServiceProcedure()
-  })
-  it(`Cancel add service \n procedure
-  (without saving the already filled-in details) and then \n
-  confirm and choose to continue with add service procedure cancellation`, () => {
-    EditService.clickCancelButton()
-    EditService.clickToConfirmTheCancel()
-  })
-})
-
 describe("Add Service Negative Tests", () => {
-  it(`Check that "add service" button is disabled unless you choose
-  to which project you want to add the service`, () => {
-    AddService.clickOnAddServiceButton()
-    // Here 'add service' button still should be disabled
-    AddService.makeSureAddServiceButtonIsDisabled()
-    AddService.clickToSelectTheProject()
-    // Here 'add service' button should be enabled
-    AddService.clickAddService()
+  describe("Cancel Add Service", () => {
+    it("Click 'Add Service' in homepage\n" + "Choose 'Testing' project", () => {
+      AddService.clickOnAddServiceButton()
+      AddService.clickToSelectTheProject()
+      AddService.clickAddService()
+    })
+    it(`First tab - Fill general details\n
+        Service name - ${AddService.EXISTING_SERVICE_NAME}`, () => {
+      AddService.typeServiceName(AddService.EXISTING_SERVICE_NAME)
+    })
+    it(`Cancel the cancel - click to cancel 'add service' procedure and then 
+     regret and choose to continue`, () => {
+      EditService.clickCancelButton()
+      EditService.cancelTheTryingToCaneclTheAddServiceProcedure()
+    })
+    it(`Cancel 'add service' procedure
+    (without saving the already filled-in details)`, () => {
+      EditService.clickCancelButton()
+      EditService.clickToConfirmTheCancel()
+    })
   })
-  it(`In first tab check that "add service" button is disabled while user did'nt
+  describe(`Check the ability to navigate back and fourth during 'add service'
+  procedure\n and that the 'next stage' button enables in every tab just
+  when all the necessary fields have been filled in`, () => {
+    it(`Check that 'add service' button is disabled unless you choose
+  to which project you want to add the service`, () => {
+      AddService.clickOnAddServiceButton()
+      // Here 'add service' button still should be disabled
+      AddService.makeSureAddServiceButtonIsDisabled()
+      AddService.clickToSelectTheProject()
+      // Here 'add service' button should be enabled
+      AddService.clickAddService()
+    })
+    it(`In first tab check that 'add service' button is disabled while user did'nt
   finish filling-in all the fields\n
   (First tab is to fill in general details)
-  Service name - ${AddService.FUTURE_SERVICE_NAME}\n
+  Service name - ${AddService.EXISTING_SERVICE_NAME}\n
   Tags - Click on all tags\n
   Description - ${AddService.SERVICE_DESCRIPTION}`, () => {
-    // Here 'next stage' button still should be disabled
-    AddService.makeSureNextStageButtonIsDisabled()
-    AddService.typeServiceName(AddService.EXISTING_SERVICE_NAME)
-    // Here 'next stage' button still should be disabled
-    AddService.makeSureNextStageButtonIsDisabled()
-    AddService.ClickOnTheWantedTags()
-    // Here 'next stage' button still should be disabled
-    AddService.makeSureNextStageButtonIsDisabled()
-    AddService.typeServiceDescription()
-    // Here 'next stage' button should be enabled
-    AddService.clickOnNextStageButton()
-  })
-  it(`In second tab check that user can go back to first tab with 'previous stage' button`, () => {
-    AddService.clickOnPreviousStageButton()
-    AddService.clickOnNextStageButton()
-  })
-  it(`In second tab check that "next stage" button is disabled while user did'nt
-      finish filling-in all the fields\n
+      AddService.typeServiceName(AddService.EXISTING_SERVICE_NAME)
+      AddService.ClickOnTheWantedTags()
+      // Until here 'next stage' button still should be disabled
+      AddService.makeSureNextStageButtonIsDisabled()
+      AddService.typeServiceDescription()
+      // Just here - (after filling in the name & tags & description) - 'next stage' button should be enabled
+      AddService.clickOnNextStageButton()
+    })
+    it(`In second tab check that user can go back to first tab with 'previous stage' button`, () => {
+      AddService.clickOnPreviousStageButton()
+      AddService.ElementFromFirstTabShouldBeVisible()
+      AddService.clickOnNextStageButton()
+    })
+    it(`In second tab check that "next stage" button is disabled while user did'nt
+      finish filling-in all the necessary fields\n
       (Second tab - Fill technical information)
       Service Status - Future service\n
       Service Type - B2C\n
       Number of requests per minute -  ${AddService.NUMBER_OF_REQUESTS_PER_MINUTE}`, () => {
-    // Here 'next stage' button still should be disabled
-    AddService.makeSureNextStageButtonIsDisabled()
-    AddService.ChooseFutureService()
-    // Here 'next stage' button still should be disabled
-    AddService.makeSureNextStageButtonIsDisabled()
-    AddService.ChooseB2CServiceType()
-    // Here 'next stage' button still should become enabled
-    AddService.makeSureNextStageButtonIsEnabled()
-    AddService.typeNumberOfRequestPerSecond()
-    AddService.clickOnNextStageButton()
+      AddService.ChooseFutureService()
+      // Until here 'next stage' button still should be disabled
+      AddService.makeSureNextStageButtonIsDisabled()
+      AddService.ChooseB2CServiceType()
+      // Just here - (after filling in the service status & service type) - 'next stage' button should become enabled
+      AddService.makeSureNextStageButtonIsEnabled()
+      AddService.clickOnNextStageButton()
+    })
+    it(`In third tab check that user can go back to second tab with 'previous stage' button`, () => {
+      AddService.clickOnPreviousStageButton()
+      AddService.ElementFromSecondTabShouldBeVisible()
+      AddService.clickOnNextStageButton()
+      AddService.clickOnNextStageButton()
+    })
+    it(`In forth tab check that user can go back to third tab with 'previous stage' button`, () => {
+      AddService.clickOnPreviousStageButton()
+      AddService.ElementFromThirdTabShouldBeVisible()
+      AddService.clickOnNextStageButton()
+      AddService.clickOnNextStageButton()
+    })
+    it(`In fifth tab check that user can go back to fourth tab with 'previous stage' button`, () => {
+      AddService.clickOnPreviousStageButton()
+      AddService.ElementFromFourthTabShouldBeVisible()
+      AddService.clickOnNextStageButton()
+      AddService.selectGraphQLAsApiType()
+      // From here it's just for finish creating the service and delete it in order
+      // to continue with next tests (it's not part of the tests)
+      AddService.clickOnFinishButton()
+      AddService.viewCreatedService()
+      DeleteService.ClickDeleteService()
+      DeleteService.confirmDeletion(AddService.EXISTING_SERVICE_NAME)
+    })
   })
 })
