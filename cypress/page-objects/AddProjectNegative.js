@@ -15,7 +15,7 @@ export default class AddProjectNegative extends AddProject {
     }
 
     static verifyNotTheEntireProjectNameWasTyped() {
-        cy.get("input[placeholder = 'הפרויקט שלי']").should("not.contain.text", "Really Looooooooooooooooooooooong Project Name")
+        cy.get("input[placeholder = 'הפרויקט שלי']").should("not.contain.text", "Really Looooooooooooooooooooooong Project Name").and("contain.text", "Really")
     }
 
     static verifyAddMemberButtonIsDisabled() {

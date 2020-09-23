@@ -1,4 +1,6 @@
-export default class EditService {
+import BasePage from "./BasePage"
+
+export default class EditService extends BasePage {
   static EDITED_SERVICE_NAME = "edited shit"
 
   static editName() {

@@ -2,16 +2,19 @@ import BasePage from "../page-objects/BasePage"
 import ViewAlerts from "../page-objects/ViewAlerts"
 import ManageSubscription from "../page-objects/ManageSubscription"
 import AddProject from "../page-objects/AddProject"
+import EditProject from "../page-objects/EditProject"
 import AddService from "../page-objects/AddService"
 import DeleteService from "../page-objects/DeleteService"
 import EditService from "../page-objects/EditService"
+import DeleteProject from "../page-objects/DeleteProject"
 import AddProjectNegative from "../page-objects/AddProjectNegative"
+import EditProjectNegative from "../page-objects/EditProjectNegative"
+import DeleteProjectNegative from "../page-objects/DeleteProjectNegarive"
 
 const EMTPY_FIELD = "EMPTY FIELD"
 
 describe(`Visit Website`, () => {
   it(`Visit`, () => {
-    // cy.visit("http://localhost:3000/")
     cy.visit("/")
   })
 })
@@ -74,6 +77,32 @@ describe(`Add Project Test`, () => {
 
   it(`View Created Project`, () => {
     AddProject.viewCreatedProject()
+  })
+})
+
+describe(`Edit Project Test`, () => {
+  it(`Go to Existing Project Page - גב האומה`, () => {
+    BasePage.goToHomePage()
+    BasePage.goToPersonalArea()
+    EditProject.openExistingProjectPage()
+  })
+
+  it(`Open Edit Window`, () => {
+    EditProject.openEditWindow()
+  })
+
+  it(`Edit Project Details\n
+      Edited Name - Edited Name\n
+      Edited Forces - זרוע היבשה\n
+      Edited Description - Edited Description`, () => {
+    EditProject.editProjectName("Edited Name")
+    EditProject.editProjectForces("זרוע היבשה")
+    EditProject.editProjectDescription("Edited Description")
+    EditProject.clickOnSaveChangesButton()
+  })
+
+  it(`Verify Changes to the Project`, () => {
+    EditProject.verifyChanges()
   })
 })
 
@@ -201,30 +230,45 @@ describe(`Add Service Test`, () => {
       AddService.viewCreatedService()
     })
   })
+})
 
-  describe(`Edit service`, () => {
-    it(`reomve two tags`, () => {
-      EditService.openEditWindow()
-      EditService.editName()
-      EditService.editNumberOfRequestsPerMinute()
-      EditService.removeTwoTagsFromService()
-      EditService.clickSave()
-    })
-  })
-
-  describe(`Edit service picture`, () => {
-    it(`Edit service picture`, () => {
-      EditService.clickEditServicePicture()
-    })
-  })
-
-  describe("Delete future service", () => {
-    it("Delete future service", () => {
-      DeleteService.ClickDeleteService()
-      DeleteService.confirmDeletion(EditService.EDITED_SERVICE_NAME)
-    })
+describe(`Edit service`, () => {
+  it(`reomve two tags`, () => {
+    EditService.openEditWindow()
+    EditService.editName()
+    EditService.editNumberOfRequestsPerMinute()
+    EditService.removeTwoTagsFromService()
+    EditService.clickSave()
   })
 })
+
+describe(`Edit service picture`, () => {
+  it(`Edit service picture`, () => {
+    EditService.clickEditServicePicture()
+  })
+})
+
+describe("Delete future service", () => {
+  it("Delete future service", () => {
+    DeleteService.ClickDeleteService()
+    DeleteService.confirmDeletion(EditService.EDITED_SERVICE_NAME)
+  })
+})
+
+describe(`Delete Project Test`, () => {
+  it(`Choose Project to Delete - Testing`, () => {
+    DeleteProject.chooseProjectToDelete("Testing")
+  })
+
+  it(`Delete Project`, () => {
+    BasePage.goToHomePage()
+    DeleteProject.openProjectPage()
+    DeleteProject.clickOnDeleteProjectButton()
+    DeleteProject.typeProjectNameForConfirmation()
+    DeleteProject.deleteProject()
+  })
+})
+
 
 describe("Add Service Negative Tests", () => {
   describe("Cancel Add Service", () => {
@@ -454,3 +498,70 @@ describe(`Add Project Negative Tests`, () => {
   })
 })
 
+describe(`Edit Project Negative Tests`, () => {
+  it(`Go to Existing Project Page - גב האומה`, () => {
+    BasePage.goToHomePage()
+    BasePage.goToPersonalArea()
+    EditProject.openExistingProjectPage()
+  })
+
+  it(`Open Edit Window`, () => {
+    EditProject.openEditWindow()
+  })
+
+  it(`Try to Save Edits without Project Name\n
+      Edited Name - ${EMTPY_FIELD}\n
+      Edited Forces - זרוע היבשה\n
+      Edited Description - Edited Description`, () => {
+    EditProjectNegative.clearProjectNameField()
+    EditProject.editProjectDescription("Edited Description")
+    EditProjectNegative.verfiySaveChangesButtonIsDisabled()
+  })
+
+  it(`Try to Save Changes with a Really Long Project Name\n
+      Edited Name - Really Looooooooooooooooooooooong Project Name\n
+      Edited Forces - זרוע היבשה\n
+      Edited Description - Edited Description`, () => {
+    EditProjectNegative.typeReallyLongProjectName()
+    EditProject.editProjectDescription("Edited Description")
+    EditProject.clickOnSaveChangesButton()
+    // To be used when changes are saved during automations
+    // EditProjectNegative.verifyNotTheEntireProjectNameWasTyped()
+    EditProject.openEditWindow()
+  })
+
+  it(`Try to Save Changes without Description\n
+      Edited Name - Edited Name\n
+      Edited Forces - זרוע היבשה\n
+      Edited Description - ${EMTPY_FIELD}`, () => {
+    EditProject.editProjectName("Edited Name")
+    EditProjectNegative.clearProjectDescriptionField()
+    EditProjectNegative.verfiySaveChangesButtonIsDisabled()
+  })
+
+  it("Navigate Back to Home Page", () => {
+    BasePage.goToHomePage()
+  })
+})
+
+describe(`Delete Project Negative Tests`, () => {
+  it(`Choose Project to Delete - גב האומה`, () => {
+    DeleteProject.chooseProjectToDelete("גב האומה")
+  })
+
+  it(`Try to Delete the Project without Typing Project Name`, () => {
+    BasePage.goToHomePage()
+    DeleteProject.openProjectPage()
+    DeleteProject.clickOnDeleteProjectButton()
+    DeleteProjectNegative.verifyDeleteProjectButtonIsDisabled()
+  })
+
+  it(`Try to Delete the Project When Typing Wrong Project Name`, () => {
+    DeleteProjectNegative.typeWrongProjectNameForConfirmation()
+    DeleteProjectNegative.verifyDeleteProjectButtonIsDisabled()
+  })
+
+  it("Navigate Back to Home Page", () => {
+    BasePage.goToHomePage()
+  })
+})
