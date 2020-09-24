@@ -10,6 +10,7 @@ import DeleteProject from "../page-objects/DeleteProject"
 import AddProjectNegative from "../page-objects/AddProjectNegative"
 import EditProjectNegative from "../page-objects/EditProjectNegative"
 import DeleteProjectNegative from "../page-objects/DeleteProjectNegarive"
+import ManageProjectMemebers from "../page-objects/ManageProjectMembers"
 
 const EMTPY_FIELD = "EMPTY FIELD"
 
@@ -77,6 +78,27 @@ describe(`Add Project Test`, () => {
 
   it(`View Created Project`, () => {
     AddProject.viewCreatedProject()
+  })
+})
+
+describe(`Manage Project Members`, () => {
+  it(`Choose Project - Testing`, () => {
+    ManageProjectMemebers.chooseProject("Testing")
+  })
+
+  it(`Go to Project Members Tab`, () => {
+    ManageProjectMemebers.clickOnProjectMembersTab()
+  })
+
+  it(`Add a Project Member - s1234567`, () => {
+    ManageProjectMemebers.clickOnAddMemberButton()
+    ManageProjectMemebers.addMember("s1234567")
+    ManageProjectMemebers.verfiyMemberExists("s1234567")
+  })
+
+  it(`Delete a Project Member - s1234567`, () => {
+    ManageProjectMemebers.deleteMember("s1234567")
+    ManageProjectMemebers.verifyMemberDoesNotExist("s1234567")
   })
 })
 
