@@ -12,12 +12,58 @@ export default class EditService {
     cy.get(".edit-title-service-modal-exit-container-icon").click()
     cy.get("#service-page-details-title-edit-btn").click({ force: true })
   }
+
+  static ChooseB2BServiceType() {
+    cy.xpath("//div[@class='radio-button__radio-text'][text()='B2B']").click()
+  }
+
+  static clickToCancelServiceEdit() {
+    cy.get(".edit-title-service-modal-btns-cancel").click()
+  }
+
+  static makeSureThatServiceTypeHasNotChanged() {
+    cy.get('label[for="B2C"] input')
+      .invoke("attr", "checked")
+      .should("contain", "")
+  }
+  static makeSureThatNumberOfRequestsHasNotChanged() {
+    let NUMBER_OF_REQUESTS_PER_MINUTE = 10250
+    cy.get('input[placeholder="2000"]').should(
+      "have.value",
+      NUMBER_OF_REQUESTS_PER_MINUTE
+    )
+  }
+  static makeSureThatTagsHaveNotChanged() {
+    let NUMBER_OF_CHOSEN_TAGS = 6
+    cy.get(".search-filters-item-selected").should((returnedObject) => {
+      expect(returnedObject).to.have.length(NUMBER_OF_CHOSEN_TAGS)
+    })
+  }
+
+  static makeSureThatNothingHasChangedDuringTheCanceledEdition() {
+    EditService.openEditWindow()
+    EditService.makeSureThatTagsHaveNotChanged()
+    EditService.makeSureThatNumberOfRequestsHasNotChanged()
+    EditService.makeSureThatServiceTypeHasNotChanged()
+  }
+
+  static cancelEdit() {
+    EditService.openEditWindow()
+    EditService.editName()
+    EditService.removeTwoTagsFromService()
+    EditService.editNumberOfRequestsPerMinute()
+    EditService.ChooseB2BServiceType()
+    EditService.clickToCancelServiceEdit()
+    EditService.makeSureThatNothingHasChangedDuringTheCanceledEdition()
+  }
+
   static editNumberOfRequestsPerMinute() {
     let EDITED_NUMBER_OF_REQUESTS_PER_MINUTE = "22"
     cy.get('input[placeholder="2000"]')
       .clear()
       .type(EDITED_NUMBER_OF_REQUESTS_PER_MINUTE)
   }
+
   static clickSave() {
     cy.get(
       "#EditProjectServiceTitleModal > div.MuiDialog-container.MuiDialog-scrollPaper > div > div > div.edit-title-service-modal-btns-container > div.edit-title-service-modal-btns-save"

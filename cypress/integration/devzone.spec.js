@@ -6,7 +6,7 @@ import AddService from "../page-objects/AddService"
 import DeleteService from "../page-objects/DeleteService"
 import EditService from "../page-objects/EditService"
 
-describe(`Visit Website`, () => {
+describe(`Visit Website Test`, () => {
   it(`Visit`, () => {
     cy.visit("http://localhost:3000/")
     // cy.visit("http://devzone-webiks.s3-website.eu-central-1.amazonaws.com")
@@ -64,8 +64,8 @@ describe(`Add Project Test`, () => {
     AddProject.viewCreatedProject()
   })
 })
-describe(`Add Service Test`, () => {
-  describe(`Add existing service`, () => {
+describe(`Add Service Tests`, () => {
+  describe(`Add existing service Test`, () => {
     it(`Click 'Add Service' in homepage\n Choose 'Testing' project`, () => {
       AddService.clickOnAddServiceButton()
       AddService.clickToSelectTheProject()
@@ -117,11 +117,15 @@ describe(`Add Service Test`, () => {
     it(`Finish adding the existed service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
+      AddService.makeSureThatEverythingSavedDuringAddServiceProcedure(
+        AddService.EXISTING_SERVICE_NAME
+      )
       DeleteService.ClickDeleteService()
       DeleteService.confirmDeletion(AddService.EXISTING_SERVICE_NAME)
     })
   })
-  describe(`Add future service`, () => {
+
+  describe(`Add future service Test`, () => {
     it(`Click 'Add Service' in homepage\n Choose 'New' project`, () => {
       AddService.clickOnAddServiceButton()
       AddService.clickToSelectTheProject()
@@ -173,31 +177,35 @@ describe(`Add Service Test`, () => {
     it(`Finish adding the future service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
-    })
-    describe(`Edit service`, () => {
-      it(`reomve two tags`, () => {
-        EditService.openEditWindow()
-        EditService.editName()
-        EditService.editNumberOfRequestsPerMinute()
-        EditService.removeTwoTagsFromService()
-        EditService.clickSave()
-      })
-    })
-    describe(`Edit service picture`, () => {
-      it(`Edit service picture`, () => {
-        EditService.clickEditServicePicture()
-      })
-    })
-    describe("Delete future service", () => {
-      it("Delete future service", () => {
-        DeleteService.ClickDeleteService()
-        DeleteService.confirmDeletion(EditService.EDITED_SERVICE_NAME)
-      })
+      AddService.makeSureThatEverythingSavedDuringAddServiceProcedure(
+        AddService.FUTURE_SERVICE_NAME
+      )
     })
   })
 })
+describe(`Edit service`, () => {
+  it(`reomve two tags`, () => {
+    EditService.openEditWindow()
+    EditService.editName()
+    EditService.removeTwoTagsFromService()
+    EditService.editNumberOfRequestsPerMinute()
+    EditService.clickSave()
+  })
+})
+describe(`Edit service picture Test`, () => {
+  it(`Edit service picture`, () => {
+    EditService.clickEditServicePicture()
+  })
+})
+describe("Delete future service Test", () => {
+  it("Delete future service", () => {
+    DeleteService.ClickDeleteService()
+    DeleteService.confirmDeletion(EditService.EDITED_SERVICE_NAME)
+  })
+})
+
 describe("Add Service Negative Tests", () => {
-  describe("Cancel Add Service", () => {
+  describe("Cancel Add Service Test", () => {
     it("Click 'Add Service' in homepage\n" + "Choose 'Testing' project", () => {
       AddService.clickOnAddServiceButton()
       AddService.clickToSelectTheProject()
@@ -207,7 +215,7 @@ describe("Add Service Negative Tests", () => {
         Service name - ${AddService.EXISTING_SERVICE_NAME}`, () => {
       AddService.typeServiceName(AddService.EXISTING_SERVICE_NAME)
     })
-    it(`Cancel the cancel - click to cancel 'add service' procedure and then 
+    it(`Cancel the cancel - click to cancel 'add service' procedure and then
      regret and choose to continue`, () => {
       EditService.clickCancelButton()
       EditService.cancelTheTryingToCaneclTheAddServiceProcedure()
@@ -259,6 +267,7 @@ describe("Add Service Negative Tests", () => {
       // Until here 'next stage' button still should be disabled
       AddService.makeSureNextStageButtonIsDisabled()
       AddService.ChooseB2CServiceType()
+      AddService.typeNumberOfRequestPerSecond()
       // Just here - (after filling in the service status & service type) - 'next stage' button should become enabled
       AddService.makeSureNextStageButtonIsEnabled()
       AddService.clickOnNextStageButton()
@@ -280,10 +289,15 @@ describe("Add Service Negative Tests", () => {
       AddService.ElementFromFourthTabShouldBeVisible()
       AddService.clickOnNextStageButton()
       AddService.selectGraphQLAsApiType()
-      // From here it's just for finish creating the service and delete it in order
-      // to continue with next tests (it's not part of the tests)
+      // From here it's just for next tests (it's not really part of this test)
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
+    })
+  })
+  describe("Cancel Edit Test", () => {
+    it("Cancel Edit", () => {
+      EditService.cancelEdit()
+      // From here it's just for next tests (it's not really part of this test)
       DeleteService.ClickDeleteService()
       DeleteService.confirmDeletion(AddService.EXISTING_SERVICE_NAME)
     })

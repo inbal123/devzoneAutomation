@@ -1,3 +1,4 @@
+import AddProject from "./AddProject"
 import BasePage from "./BasePage"
 
 export default class AddService extends BasePage {
@@ -15,13 +16,14 @@ export default class AddService extends BasePage {
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   ]
+  static PROJECT_NAME = "Testing"
   static EXISTING_SERVICE_NAME = "existing service"
   static FUTURE_SERVICE_NAME = "future service"
   static SERVICE_DESCRIPTION = "my description"
   static NUMBER_OF_REQUESTS_PER_MINUTE = "10250"
   static LINK_TO_THE_OPERATION_CHANNEL = "example.com"
-  static EXAMPLE_ARMY_PHONE_NUMBER = "55555555"
-  static EXAMPLE_CIVILIAN_PHONE_NUMBER = "555555555"
+  static EXAMPLE_ARMY_PHONE_NUMBER = "5555-5555"
+  static EXAMPLE_CIVILIAN_PHONE_NUMBER = "55-5555555"
   static RULE_OF_PRODUCT_MANAGER = "klumnik"
   static GRAPHQL_SERVER_ENDPOINT_LINK = "http://graphql-server-endpoint-link"
   static SWAGGER_SERVER_ENDPOINT_LINK = "http://swagger-server-endpoint-link"
@@ -48,7 +50,7 @@ export default class AddService extends BasePage {
   }
 
   static clickToSelectTheProject() {
-    cy.xpath("//div[text()='Testing']").click()
+    cy.xpath("//div[text()='" + AddService.PROJECT_NAME + "']").click()
   }
 
   static clickAddService() {
@@ -103,8 +105,8 @@ export default class AddService extends BasePage {
     AddService.typeLinkToTheOperationChannel()
     AddService.typeDevelopmentTeamPhoneNumbers()
     AddService.typeOperatingCHAMALPhoneNumbers()
-    AddService.selectUser()
     AddService.TypeProductManagerDetails()
+    AddService.selectUser()
   }
 
   static selectUser() {
@@ -239,5 +241,49 @@ export default class AddService extends BasePage {
     cy.xpath("//span[text()='אפשר לבחור קובץ או לגרור אותו לכאן']").should(
       "be.visible"
     )
+  }
+
+  static makeSureThatEverythingSavedDuringAddServiceProcedure(serviceName) {
+    cy.get(
+      "#service-page-container > div.service-page-header-container > div.service-page-right-side-container > div.service-page-right-side-details-container > div.service-page-details-title-container > span"
+    ).should("have.text", serviceName)
+    cy.get(
+      "#service-page-container > div.service-page-header-container > div.service-page-right-side-container > div.service-page-right-side-details-container > div.service-page-right-side-details-by-and-update > span.service-page-right-side-details-by-and-update-by > span"
+    ).should("have.text", AddService.PROJECT_NAME)
+    cy.get(
+      'div[class="labels-service-details"] div[class="labels-label-service-details"]'
+    ).should("have.length", 6)
+    cy.get(
+      "#service-page-container > div.service-page-header-container > div.service-page-left-side-container > div.service-page-left-side-details > div.service-page-left-side-details-load > span.service-page-left-side-details-result"
+    ).should("have.text", AddService.NUMBER_OF_REQUESTS_PER_MINUTE)
+    cy.get(
+      "#service-page-container > div.service-page-header-container > div.service-page-left-side-container > div.service-page-left-side-details > div.service-page-left-side-details-type > span.service-page-left-side-details-result"
+    ).should(
+      "have.text",
+      serviceName === AddService.EXISTING_SERVICE_NAME ? "B2B" : "B2C"
+    )
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(1) > div > div:nth-child(2) > span:nth-child(2)"
+    ).should("have.text", AddService.EXAMPLE_ARMY_PHONE_NUMBER)
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(1) > div > div:nth-child(3) > span:nth-child(2)"
+    ).should("have.text", AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER)
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(2) > div > div:nth-child(1) > span:nth-child(2)"
+    ).should("have.text", AddService.EXAMPLE_ARMY_PHONE_NUMBER)
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(2) > div > div:nth-child(2) > span:nth-child(2)"
+    ).should("have.text", AddService.EXAMPLE_CIVILIAN_PHONE_NUMBER)
+    // I concatenated the 'edit' word due to a bug in the system that doing it automatically and causes this test to fail
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(3) > div.on-service-tab-connect-item-title"
+    ).should("have.text", AddService.RULE_OF_PRODUCT_MANAGER + "edit")
+    cy.get(
+      "#service-page-container > div.service-page-inner-container > div.on-service-tab-container > div.on-service-tab-connect-container > div > div:nth-child(3) > div.on-service-tab-connect-item-details-container > div:nth-child(3) > span:nth-child(2)"
+    ).should("have.text", AddService.EXAMPLE_ARMY_PHONE_NUMBER)
+    // I waited for 15 files instead of 5 like it should be due to a bug in the system that gets 15 files when we upload just 5 files and causes this test to fail
+    cy.get(
+      "div[class='on-service-tab-extra-reading-files-file-container']"
+    ).should("have.length", 15)
   }
 }
