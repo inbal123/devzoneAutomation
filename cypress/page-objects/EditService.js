@@ -1,16 +1,23 @@
 export default class EditService {
   static EDITED_SERVICE_NAME = "edited shit"
+  static EDITED_NUMBER_OF_REQUESTS_PER_MINUTE = "22"
 
-  static editName() {
+  static editServiceName() {
     cy.get('input[placeholder="השירות שלי"]')
       .clear()
       .type(EditService.EDITED_SERVICE_NAME)
   }
-  static openEditWindow() {
+  static openEditServiceWindow() {
     cy.get("#service-page-details-title-edit-btn").click({ force: true })
     cy.wait(1000)
     cy.get(".edit-title-service-modal-exit-container-icon").click()
     cy.get("#service-page-details-title-edit-btn").click({ force: true })
+  }
+
+  static CloseEditServiceWindow() {
+    cy.get(
+      "svg[class='edit-title-service-modal-exit-container-icon'] g"
+    ).click({ force: true })
   }
 
   static ChooseB2BServiceType() {
@@ -41,15 +48,16 @@ export default class EditService {
   }
 
   static makeSureThatNothingHasChangedDuringTheCanceledEdition() {
-    EditService.openEditWindow()
+    EditService.openEditServiceWindow()
     EditService.makeSureThatTagsHaveNotChanged()
     EditService.makeSureThatNumberOfRequestsHasNotChanged()
     EditService.makeSureThatServiceTypeHasNotChanged()
+    EditService.CloseEditServiceWindow()
   }
 
-  static cancelEdit() {
-    EditService.openEditWindow()
-    EditService.editName()
+  static cancelEditService() {
+    EditService.openEditServiceWindow()
+    EditService.editServiceName()
     EditService.removeTwoTagsFromService()
     EditService.editNumberOfRequestsPerMinute()
     EditService.ChooseB2BServiceType()
@@ -58,10 +66,9 @@ export default class EditService {
   }
 
   static editNumberOfRequestsPerMinute() {
-    let EDITED_NUMBER_OF_REQUESTS_PER_MINUTE = "22"
     cy.get('input[placeholder="2000"]')
       .clear()
-      .type(EDITED_NUMBER_OF_REQUESTS_PER_MINUTE)
+      .type(EditService.EDITED_NUMBER_OF_REQUESTS_PER_MINUTE)
   }
 
   static clickSave() {

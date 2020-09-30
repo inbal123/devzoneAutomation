@@ -17,5 +17,6 @@
         "jsbeautifyrc",
         "jshintrc",
         "ts"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

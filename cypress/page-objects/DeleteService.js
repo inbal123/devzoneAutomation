@@ -15,10 +15,25 @@ export default class DeleteService extends BasePage {
   static ClickDeleteService() {
     cy.xpath("//span[text()='מחיקת השירות']").click({ force: true })
   }
-
-  static confirmDeletion(serviceName) {
+  static typeNameToConfirmDeletion(serviceName) {
     cy.xpath("//input[@placeholder='שם השירות']").type(serviceName)
+  }
+
+  static DeleteService(serviceName) {
+    DeleteService.ClickDeleteService()
+    DeleteService.confirmDeletion(serviceName)
+  }
+  static confirmDeletion(serviceName) {
+    DeleteService.typeNameToConfirmDeletion(serviceName)
     cy.xpath("//div[text()='מחיקת השירות']").click()
     cy.xpath('//*[@id="root"]/div/div[1]/div/span').should("be.visible")
+  }
+  static ClickOnCancelDeletionButton() {
+    cy.get("div[class='delete-service-modal-btns-cancel']").click()
+  }
+  static clickOnXToExit() {
+    cy.get("svg[class='delete-service-modal-exit-icon']").click({
+      force: true,
+    })
   }
 }

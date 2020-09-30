@@ -5,11 +5,13 @@ import AddProject from "../page-objects/AddProject"
 import AddService from "../page-objects/AddService"
 import DeleteService from "../page-objects/DeleteService"
 import EditService from "../page-objects/EditService"
+import AddGuide from "../page-objects/AddGuide"
 
 describe(`Visit Website Test`, () => {
   it(`Visit`, () => {
     cy.visit("http://localhost:3000/")
     // cy.visit("http://devzone-webiks.s3-website.eu-central-1.amazonaws.com")
+    //  npm run cy:run --record --key ae6466a9-bb06-4033-adaa-307c60655eff
   })
 })
 describe(`View Alerts Test`, () => {
@@ -68,7 +70,7 @@ describe(`Add Service Tests`, () => {
   describe(`Add existing service Test`, () => {
     it(`Click 'Add Service' in homepage\n Choose 'Testing' project`, () => {
       AddService.clickOnAddServiceButton()
-      AddService.clickToSelectTheProject()
+      AddService.clickToSelectTheProject(AddService.PROJECT_NAME)
       AddService.clickAddService()
     })
     it(`First tab - Fill general details\n
@@ -80,6 +82,7 @@ describe(`Add Service Tests`, () => {
       AddService.typeServiceDescription()
       AddService.clickOnNextStageButton()
     })
+
     it(`Second tab - Fill technical information\n
       Service Status - Existing service\n
       Service Type - B2B\n
@@ -114,7 +117,7 @@ describe(`Add Service Tests`, () => {
       AddService.selectGraphQLAsApiType()
       AddService.typeGraphQLServerEndpointLink()
     })
-    it(`Finish adding the existed service`, () => {
+    it(`Finish adding service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
       AddService.makeSureThatEverythingSavedDuringAddServiceProcedure(
@@ -128,7 +131,7 @@ describe(`Add Service Tests`, () => {
   describe(`Add future service Test`, () => {
     it(`Click 'Add Service' in homepage\n Choose 'New' project`, () => {
       AddService.clickOnAddServiceButton()
-      AddService.clickToSelectTheProject()
+      AddService.clickToSelectTheProject(AddService.PROJECT_NAME)
       AddService.clickAddService()
     })
     it(`First tab - Fill general details\n
@@ -174,7 +177,7 @@ describe(`Add Service Tests`, () => {
       AddService.selectSwaggerAsApiType()
       AddService.typeSwaggerServerEndpointLink()
     })
-    it(`Finish adding the future service`, () => {
+    it(`Finish adding service`, () => {
       AddService.clickOnFinishButton()
       AddService.viewCreatedService()
       AddService.makeSureThatEverythingSavedDuringAddServiceProcedure(
@@ -183,32 +186,34 @@ describe(`Add Service Tests`, () => {
     })
   })
 })
-describe(`Edit service`, () => {
-  it(`reomve two tags`, () => {
-    EditService.openEditWindow()
-    EditService.editName()
-    EditService.removeTwoTagsFromService()
-    EditService.editNumberOfRequestsPerMinute()
-    EditService.clickSave()
+describe(`Edit service Tests`, () => {
+  describe(`Edit service details Test`, () => {
+    it(`Service name - ${EditService.EDITED_SERVICE_NAME}\n
+    Tags - Remove two tags\n
+    Number of requests per minute - ${EditService.EDITED_NUMBER_OF_REQUESTS_PER_MINUTE}`, () => {
+      EditService.openEditServiceWindow()
+      EditService.editServiceName()
+      EditService.removeTwoTagsFromService()
+      EditService.editNumberOfRequestsPerMinute()
+      EditService.clickSave()
+    })
+  })
+  describe(`Edit service picture Test`, () => {
+    it(`Edit service picture`, () => {
+      EditService.clickEditServicePicture()
+    })
   })
 })
-describe(`Edit service picture Test`, () => {
-  it(`Edit service picture`, () => {
-    EditService.clickEditServicePicture()
+describe(`Delete service Test`, () => {
+  it("Delete service", () => {
+    DeleteService.DeleteService(EditService.EDITED_SERVICE_NAME)
   })
 })
-describe("Delete future service Test", () => {
-  it("Delete future service", () => {
-    DeleteService.ClickDeleteService()
-    DeleteService.confirmDeletion(EditService.EDITED_SERVICE_NAME)
-  })
-})
-
-describe("Add Service Negative Tests", () => {
-  describe("Cancel Add Service Test", () => {
+describe(`Service Negative Tests`, () => {
+  describe(`'Cancel Add Service' Test`, () => {
     it("Click 'Add Service' in homepage\n" + "Choose 'Testing' project", () => {
       AddService.clickOnAddServiceButton()
-      AddService.clickToSelectTheProject()
+      AddService.clickToSelectTheProject(AddService.PROJECT_NAME)
       AddService.clickAddService()
     })
     it(`First tab - Fill general details\n
@@ -234,7 +239,7 @@ describe("Add Service Negative Tests", () => {
       AddService.clickOnAddServiceButton()
       // Here 'add service' button still should be disabled
       AddService.makeSureAddServiceButtonIsDisabled()
-      AddService.clickToSelectTheProject()
+      AddService.clickToSelectTheProject(AddService.PROJECT_NAME)
       // Here 'add service' button should be enabled
       AddService.clickAddService()
     })
@@ -294,12 +299,32 @@ describe("Add Service Negative Tests", () => {
       AddService.viewCreatedService()
     })
   })
-  describe("Cancel Edit Test", () => {
-    it("Cancel Edit", () => {
-      EditService.cancelEdit()
-      // From here it's just for next tests (it's not really part of this test)
-      DeleteService.ClickDeleteService()
-      DeleteService.confirmDeletion(AddService.EXISTING_SERVICE_NAME)
+  describe("'Cancel Edit service' Test", () => {
+    it("Cancel Edit service", () => {
+      EditService.cancelEditService()
     })
+  })
+  describe("'Cancel Delete service' Test", () => {
+    it("Cancel Delete service via 'Cancel' button", () => {
+      DeleteService.ClickDeleteService()
+      DeleteService.typeNameToConfirmDeletion(AddService.EXISTING_SERVICE_NAME)
+      DeleteService.ClickOnCancelDeletionButton()
+    })
+    it("Cancel Delete via 'X' symbole", () => {
+      DeleteService.ClickDeleteService()
+      DeleteService.typeNameToConfirmDeletion(AddService.EXISTING_SERVICE_NAME)
+      DeleteService.clickOnXToExit()
+    })
+  })
+})
+describe(`Add Guide to service Test`, () => {
+  it(`Add Guide to service`, () => {
+    AddGuide.clickHowToGetStartedButton()
+    AddGuide.clickToAddNewGuide()
+    AddGuide.typeGuideName()
+    AddGuide.typeGuideDescription()
+    AddGuide.uploadGuidePicture()
+    AddGuide.clickOnSaveChangesButton()
+    AddGuide.makeSureTheGuideHasBeenSaved()
   })
 })

@@ -49,8 +49,8 @@ export default class AddService extends BasePage {
     ).click()
   }
 
-  static clickToSelectTheProject() {
-    cy.xpath("//div[text()='" + AddService.PROJECT_NAME + "']").click()
+  static clickToSelectTheProject(projectName) {
+    cy.xpath("//div[text()='" + projectName + "']").click()
   }
 
   static clickAddService() {
