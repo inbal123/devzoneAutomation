@@ -7,9 +7,11 @@ export default class BasePage {
     cy.reload()
   }
 
+
   static goToHomePage() {
     cy.visit("/")
   }
+
 
   static goToPersonalArea() {
     cy.get(".user-label-btn").click()
