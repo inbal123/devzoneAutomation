@@ -359,6 +359,7 @@ describe(`Guides Tests`, () => {
   describe(`Delete Guide Test`, () => {
     it(`Delete Guide`, () => {
       DeleteGuide.clickOnDeleteGuideButton()
+      DeleteService.DeleteService(AddService.EXISTING_SERVICE_NAME)
     })
   })
 })
