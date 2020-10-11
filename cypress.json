@@ -1,6 +1,8 @@
 {
-    "retries": 2,
-    "viewportWidth": 1280,
-    "viewportHeight": 800,
-    "baseUrl": "http://devzone-test.s3-website.eu-central-1.amazonaws.com"
+  "retries": 3,
+  "viewportWidth": 1280,
+  "viewportHeight": 800,
+  "baseUrl": "http://localhost:3000/",
+  "video": true,
+  "projectId": "xxnihk"
 }
