@@ -1,8 +1,8 @@
 {
-  "retries": 3,
+  "retries": 1,
   "viewportWidth": 1280,
   "viewportHeight": 800,
   "baseUrl": "http://localhost:3000/",
   "video": true,
-  "projectId": "xxnihk"
+  "projectId": "x6heid"
 }

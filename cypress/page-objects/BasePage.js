@@ -1,17 +1,19 @@
 export default class BasePage {
-  static logMessage(message) {
-    cy.log(message)
-  }
+	static PROJECT_NAME = 'Testing'
 
-  static reloadPage() {
-    cy.reload()
-  }
+	static logMessage(message) {
+		cy.log(message)
+	}
 
-  static goToHomePage() {
-    cy.visit("/")
-  }
+	static reloadPage() {
+		cy.reload()
+	}
 
-  static goToPersonalArea() {
-    cy.get(".user-label-btn").click()
-  }
+	static goToHomePage() {
+		cy.visit('/')
+	}
+
+	static goToPersonalArea() {
+		cy.get('.user-label-btn').click()
+	}
 }
